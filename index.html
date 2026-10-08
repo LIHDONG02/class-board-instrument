@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Class Board Instrument</title>
+<meta name="description" content="Law Lih Dong's Project 3 for TIGP 2026: the class board as an instrument, and the printed housing designed for it.">
+<style>
+  :root{
+    --bg:#F6F4EE; --ink:#1E2328; --dim:#5D6670; --line:#1E232816; --card:#FFFFFF;
+    --face:#30363D; --amber:#F2C14E; --amber-ink:#8A6200; --link:#1F5FA8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#16191D; --ink:#E9ECEF; --dim:#9AA4AE; --line:#FFFFFF18; --card:#1E2227;
+           --face:#0F1215; --amber-ink:#F2C14E; --link:#7DB3F0; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
+  .wrap{max-width:980px;margin:0 auto;padding-inline:16px}
+  a{color:var(--link)}
+  h1,h2{line-height:1.15;margin:0 0 .5em;letter-spacing:-.015em}
+  h1{font-size:clamp(2.1rem,6vw,3.4rem)}
+  h2{font-size:clamp(1.35rem,3vw,1.85rem)}
+  header.hero{background:var(--face);color:#F1F3F5}
+  header.hero .wrap{padding-block:clamp(2.2rem,7vw,4rem)}
+  .tag{font-size:.82rem;letter-spacing:.09em;text-transform:uppercase;color:var(--amber);margin:0 0 .6em;font-weight:700}
+  .lede{font-size:clamp(1.05rem,2.2vw,1.2rem);max-width:66ch;margin:0;color:#D5DADF}
+  .btns{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.6rem}
+  .btn{display:inline-block;padding:.6rem 1.05rem;border-radius:9px;text-decoration:none;font-weight:650;
+       border:1.5px solid #FFFFFF33;color:#F1F3F5}
+  .btn.primary{background:var(--amber);border-color:var(--amber);color:#1E2328}
+  .btn:hover{border-color:var(--amber)}
+  section{padding-block:clamp(2rem,6vw,3.4rem);border-top:1px solid var(--line)}
+  section:first-of-type{border-top:0}
+  figure{margin:0 0 1.2rem}
+  figure img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line);background:#FFFFE5}
+  figcaption{color:var(--dim);font-size:.9rem;margin-top:.5rem}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+  @media (max-width:720px){.two{grid-template-columns:1fr}}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin:1.4rem 0 0}
+  .fact{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem}
+  .fact b{display:block;font-size:1.45rem;line-height:1.2;color:var(--amber-ink)}
+  .fact span{color:var(--dim);font-size:.88rem}
+  .scroll{overflow-x:auto}
+  .tbl{width:100%;border-collapse:collapse;font-size:.95rem;min-width:560px}
+  .tbl th,.tbl td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+  .tbl th{color:var(--dim);font-weight:600}
+  .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:10px;padding:.9rem 1.1rem}
+  ol li,ul li{margin:.3em 0}
+  code{font-size:.92em}
+  footer{padding-block:2rem;color:var(--dim);font-size:.9rem;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="tag">Project 3 · Basic Skills for Experimentalists · TIGP 2026</p>
+    <h1>Class Board Instrument</h1>
+    <p class="lede">The class board turns an ESP32-S3 dev board into a small lab instrument: eight analog inputs, two
+    ±10 V outputs, fast TTL lines, a trigger, isolated inputs and a low-field NMR transmitter and receiver. This page
+    is about the housing I designed so the board can sit on a lab bench as one closed instrument. The firmware and the
+    phone app come next.</p>
+    <div class="btns">
+      <a class="btn primary" href="#files">Housing files</a>
+      <a class="btn" href="#assembly">How it goes together</a>
+      <a class="btn" href="https://github.com/LIHDONG02/class-board-instrument">This site's code</a>
+      <a class="btn" href="https://github.com/TIGP-Experimental-Methods/class-board-2026">The class board</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <figure>
+    <img src="images/turntable.gif" alt="The closed housing turning: a yellow printed base, a charcoal cover with white labels, SMA jacks and terminals coming through">
+    <figcaption>The housing around both boards, rendered from the OpenSCAD model with the real board meshes.</figcaption>
+  </figure>
+  <div class="facts">
+    <div class="fact"><b>202 × 122</b><span>mm footprint, posts included</span></div>
+    <div class="fact"><b>42 mm</b><span>tall to the cover face, 54 mm to the OLED hood</span></div>
+    <div class="fact"><b>5.6 mm</b><span>of SMA thread clear above the cover</span></div>
+    <div class="fact"><b>0 clashes</b><span>every board-mesh point checked against the parts</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>The board</h2>
+  <p>The class board is the shared platform we designed together in Workshop 2: two 180 × 100 mm boards stacked
+  11 mm apart. The <b>front panel</b> is the face of the instrument, with sixteen SMA jacks (AI1–AI8, AO1–AO2,
+  TRIG, AUX, FAST1–2, TX, RX), an OLED, three status LEDs, a Qwiic socket, a module header and four screw terminals
+  on its front edge. The <b>main board</b> underneath carries the circuitry; its rear edge has USB-C, a 5 V DC jack,
+  the 7–18 V external input and the coil terminals. The ESP32-S3 dev board plugs in below it.</p>
+</section>
+
+<section id="assembly">
+  <h2>The housing</h2>
+  <figure>
+    <img src="images/exploded.png" alt="Exploded view: charcoal cover above, the two boards in the yellow base, the clear acrylic lid below">
+    <figcaption>Exploded: cover, the board stack in the base, clear acrylic lid.</figcaption>
+  </figure>
+  <p>Every dimension comes from the KiCad files and the board meshes, not from a ruler. Three parts and a lid:</p>
+  <div class="scroll"><table class="tbl">
+    <tr><th>Part</th><th>What it does</th><th>Made by</th></tr>
+    <tr><td>Base</td><td>Four 2 mm walls, corner posts with M3 nut pockets that open to the side, four columns the board
+      stack rests on (its screw heads locate it), rear openings sized for the plugs, engraved names</td><td>3D print, no supports</td></tr>
+    <tr><td>Cover</td><td>Sits 2.2 mm above the panel, just over the SMA hex bases, so the plug nuts reach the thread.
+      A hood holds the OLED 14 mm up; two bumps clear the optocouplers; everything else is solid plastic over the
+      solder tails</td><td>3D print face up, no supports</td></tr>
+    <tr><td>Label inlay</td><td>Optional white fill for the engraved labels, printed as a second colour</td><td>3D print (AMS)</td></tr>
+    <tr><td>Lid</td><td>Clear bottom; four screws and it comes off to reach the dev board's RESET and BOOT</td><td>Laser cut, 3 mm acrylic</td></tr>
+  </table></div>
+  <p><b>Putting it together:</b></p>
+  <ol>
+    <li>Stack the boards on four M3 × 11 stand-offs with eight M3 × 6 screws.</li>
+    <li>Drop the stack into the base; the main board's screw heads sit in the column tops.</li>
+    <li>Slide four M3 nuts into the upper pockets of the posts and screw the cover on (M3 × 10).</li>
+    <li>Four nuts into the lower pockets, and the lid goes on the same way.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Labels</h2>
+  <div class="two">
+    <figure>
+      <img src="images/top.png" alt="Top view of the cover with the connector names">
+      <figcaption>Front: every name is the one on the panel's silkscreen, engraved 0.6 mm.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/rear.png" alt="Rear wall with USB-C, DC IN and terminal openings and their names">
+      <figcaption>Rear: USB-C, DC IN, EXT IN 7–18 V, the H-bridge coil and the coil supply, with pole marks
+      read from the board's pads.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="files">
+  <h2>Files</h2>
+  <p>One parametric OpenSCAD file makes every part. GitHub shows the STL files in a 3D viewer.</p>
+  <div class="scroll"><table class="tbl">
+    <tr><th>File</th><th>What it is</th></tr>
+    <tr><td><a href="housing/housing.scad">housing.scad</a></td><td>The model (OpenSCAD 2021.01). <code>part</code> picks
+      assembly, section, plate, base, cover, labels, lid or coupon; the console prints the numbers to check</td></tr>
+    <tr><td><a href="https://github.com/LIHDONG02/class-board-instrument/blob/main/housing/base.stl">base.stl</a></td><td>Base, as it goes on the bed</td></tr>
+    <tr><td><a href="https://github.com/LIHDONG02/class-board-instrument/blob/main/housing/cover.stl">cover.stl</a> +
+      <a href="https://github.com/LIHDONG02/class-board-instrument/blob/main/housing/cover_labels.stl">cover_labels.stl</a></td><td>Cover, face up; the labels file is the optional white inlay</td></tr>
+    <tr><td><a href="https://github.com/LIHDONG02/class-board-instrument/blob/main/housing/coupon.stl">coupon.stl</a></td><td>Test print: holes 3.0–3.6 mm, an SMA thread hole, a nut pocket, a 2 mm wall</td></tr>
+    <tr><td><a href="housing/lid.dxf">lid.dxf</a></td><td>Bottom lid for the laser cutter</td></tr>
+    <tr><td><a href="https://github.com/LIHDONG02/class-board-instrument/tree/main/tools">tools/</a></td><td>The scripts that render the pictures on this page</td></tr>
+  </table></div>
+  <p class="note">The model reads the board meshes from the class repository by relative path. To open it with the
+  boards in place, use the copy in <code>class-board-2026/docs/students/lihdong/housing/</code>.</p>
+</section>
+
+<section>
+  <h2>Printing</h2>
+  <div class="two">
+    <figure>
+      <img src="images/plate.png" alt="Base and cover together on a 256 mm print plate">
+      <figcaption>Base and cover fit on one Bambu Lab P1S plate.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/coupon.png" alt="The test coupon">
+      <figcaption>The coupon goes first: it says which hole an M3 screw and an SMA thread really need on this printer.</figcaption>
+    </figure>
+  </div>
+  <p class="note">Status, 8 October 2026: designed and exported, not printed yet. Next: the firmware and the phone
+  app that make the board an instrument, and photos of the real thing in its housing.</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">Law Lih Dong · Basic Skills for Experimentalists, TIGP 2026 · Housing modelled in OpenSCAD with the class board's KiCad meshes</div>
+</footer>
+
+</body>
+</html>
